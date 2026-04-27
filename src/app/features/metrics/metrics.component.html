@@ -1,0 +1,43 @@
+<div class="page-container">
+  <app-page-header title="Métricas y Reportes" subtitle="UC7 — últimos 7 días" />
+
+  <div class="kpi-row">
+    <app-card>
+      <span class="kpi-label">Consultas totales</span>
+      <span class="kpi-value">{{ kpis().total }}</span>
+    </app-card>
+    <app-card>
+      <span class="kpi-label">Urgencias ALTAS</span>
+      <span class="kpi-value danger">{{ kpis().altas }}</span>
+    </app-card>
+    <app-card>
+      <span class="kpi-label">Tasa de mejora</span>
+      <span class="kpi-value success">{{ kpis().mejora }}%</span>
+    </app-card>
+    <app-card>
+      <span class="kpi-label">Regla más activada</span>
+      <span class="kpi-value small">{{ topRegla() }}</span>
+    </app-card>
+  </div>
+
+  <div class="charts-grid">
+    <app-card title="Consultas por día" icon="trending-up-outline">
+      <div class="chart-wrap">
+        <canvas baseChart type="line" [data]="volumeChart" [options]="chartOptions!"></canvas>
+      </div>
+    </app-card>
+
+    <app-card title="Distribución de urgencia" icon="pie-chart-outline">
+      <div class="chart-wrap">
+        <canvas baseChart type="doughnut" [data]="distributionChart"
+          [options]="{ responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }"></canvas>
+      </div>
+    </app-card>
+
+    <app-card title="Tasa de mejora diaria" icon="bar-chart-outline">
+      <div class="chart-wrap">
+        <canvas baseChart type="bar" [data]="improvementChart" [options]="chartOptions!"></canvas>
+      </div>
+    </app-card>
+  </div>
+</div>

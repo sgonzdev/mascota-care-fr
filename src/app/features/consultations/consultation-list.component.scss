@@ -1,0 +1,164 @@
+.page-container {
+  padding: 16px;
+
+  @media (min-width: 768px) {
+    padding: 32px 40px;
+  }
+}
+
+.page-header {
+  margin-bottom: 16px;
+
+  h1 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    color: var(--color-foreground);
+
+    @media (min-width: 768px) { font-size: 28px; }
+  }
+
+  .subtitle {
+    font-size: 13px;
+    color: var(--color-muted-foreground);
+    margin-top: 4px;
+  }
+}
+
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.filter-btn {
+  padding: 6px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-foreground);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  &.active {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+  }
+}
+
+.consultations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.consultation-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+}
+
+.card-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pet-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-secondary);
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.pet-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pet-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-foreground);
+}
+
+.case-number {
+  font-size: 12px;
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.pet-meta {
+  font-size: 12px;
+  color: var(--color-muted-foreground);
+}
+
+.card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.symptom {
+  font-size: 13px;
+  color: var(--color-foreground);
+}
+
+.date {
+  font-size: 12px;
+  color: var(--color-muted-foreground);
+}
+
+.card-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  color: var(--color-foreground);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+
+  ion-icon { font-size: 14px; }
+}
+
+.empty-state {
+  padding: 48px;
+  text-align: center;
+  color: var(--color-muted-foreground);
+}

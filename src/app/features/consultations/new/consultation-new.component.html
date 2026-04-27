@@ -1,0 +1,47 @@
+<div class="page-container">
+  <app-page-header title="Nueva Consulta" subtitle="UC2 · UC3 — describe los síntomas y recibe el triage" />
+
+  @if (myPets().length === 0) {
+    <app-card>
+      <app-empty-state icon="paw-outline" title="No tienes mascotas registradas"
+        description="Registra tu primera mascota para poder iniciar una consulta de síntomas.">
+        <a routerLink="/pets/new"><app-button icon="add-outline">Registrar mascota</app-button></a>
+      </app-empty-state>
+    </app-card>
+  } @else if (result(); as r) {
+    <app-card [icon]="'sparkles-outline'" title="Resultado del triage">
+      <div class="result">
+        <app-badge [variant]="urgenciaVariant[r.nivel]">Urgencia {{ urgenciaLabel[r.nivel] }}</app-badge>
+        <p class="accion">{{ r.accion }}</p>
+        <div class="result-actions">
+          <app-button variant="outline" (click)="result.set(null)">Nueva consulta</app-button>
+          <app-button icon="arrow-forward-outline" (click)="goToDetail()">Ver caso</app-button>
+        </div>
+      </div>
+    </app-card>
+  } @else {
+    <app-card icon="clipboard-outline" title="Datos de la consulta">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <app-form-field label="Mascota" [required]="true" [error]="err('idMascota')">
+          <select formControlName="idMascota">
+            @for (m of myPets(); track m.id) {
+              <option [value]="m.id">{{ m.nombre }} · {{ m.especie }} · {{ m.raza }}</option>
+            }
+          </select>
+        </app-form-field>
+
+        <app-form-field label="Descripción de síntomas" [required]="true"
+          [error]="err('descripcionSintomas')"
+          hint="Describe qué observas, desde cuándo y cualquier cambio de comportamiento.">
+          <textarea formControlName="descripcionSintomas" rows="5"
+            placeholder="Ejemplo: Mi perro tiene diarrea desde hace 12 horas, pero come normal y juega..."></textarea>
+        </app-form-field>
+
+        <div class="form-actions">
+          <a routerLink="/consultations"><app-button variant="ghost">Cancelar</app-button></a>
+          <app-button type="submit" icon="flash-outline">Evaluar urgencia</app-button>
+        </div>
+      </form>
+    </app-card>
+  }
+</div>

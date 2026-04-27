@@ -1,0 +1,57 @@
+<div class="page-container">
+  <div class="page-header">
+    <div>
+      <h1>Resumen</h1>
+      <p>Bienvenido al panel de control de MascotaCare</p>
+    </div>
+    <div class="cta-row">
+      <a class="cta cta--primary" routerLink="/consultations/new">
+        <ion-icon name="add-circle-outline" /> Nueva consulta
+      </a>
+      <a class="cta cta--outline" routerLink="/pets/new">
+        <ion-icon name="paw-outline" /> Registrar mascota
+      </a>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    @for (stat of stats; track stat.label) {
+      <div class="stat-card" [class]="stat.colorClass">
+        <div class="stat-icon"><ion-icon [name]="stat.icon" /></div>
+        <div class="stat-info">
+          <span class="stat-value">{{ stat.value() }}</span>
+          <span class="stat-label">{{ stat.label }}</span>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Consultas Recientes</h2>
+      <a class="view-all" routerLink="/consultations">
+        Ver todas <ion-icon name="arrow-forward-outline" />
+      </a>
+    </div>
+    <div class="recent-list">
+      @for (c of recientes(); track c.id) {
+        <div class="recent-item">
+          <div class="pet-thumb">{{ initialsOf(c.mascota.nombre) }}</div>
+          <div class="item-info">
+            <span class="item-name">{{ c.mascota.nombre }} — Caso #{{ c.caseNumber }}</span>
+            <span class="item-symptom">{{ c.descripcionSintomas }}</span>
+          </div>
+          <div class="item-meta">
+            <app-badge [variant]="urgenciaVariant[c.nivelUrgencia]">
+              {{ urgenciaLabel[c.nivelUrgencia] }}
+            </app-badge>
+            <span class="item-date">{{ c.fechaHora | date:'dd/MM/yyyy' }}</span>
+          </div>
+          <a class="item-link" [routerLink]="['/consultations', c.id]">
+            <ion-icon name="arrow-forward-outline" />
+          </a>
+        </div>
+      }
+    </div>
+  </div>
+</div>

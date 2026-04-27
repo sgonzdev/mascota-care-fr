@@ -1,0 +1,203 @@
+.page-container {
+  padding: 16px;
+  max-width: 900px;
+  margin: 0 auto;
+
+  @media (min-width: 768px) { padding: 24px 32px; }
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  gap: 12px;
+  flex-wrap: wrap;
+
+  .status-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &.btn-outline {
+    border-color: var(--color-border);
+    background: transparent;
+    color: var(--color-foreground);
+  }
+
+  &.btn-primary {
+    background: var(--color-primary);
+    color: white;
+  }
+
+  &.w-full { width: 100%; justify-content: flex-start; }
+  ion-icon { font-size: 16px; }
+}
+
+.detail-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pet-card {
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+
+  h2 { font-size: 18px; font-weight: 600; }
+  p  { color: var(--color-muted-foreground); font-size: 13px; margin-top: 2px; }
+}
+
+.pet-avatar,
+.owner-avatar {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-secondary);
+  color: var(--color-primary);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.pet-avatar   { width: 60px; height: 60px; font-size: 20px; }
+.owner-avatar { width: 40px; height: 40px; font-size: 14px; }
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-foreground);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 12px;
+
+  ion-icon { font-size: 17px; }
+}
+
+.rule-card { border-color: var(--color-primary); }
+.rule-header { color: var(--color-primary); }
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.info-item { display: flex; flex-direction: column; gap: 4px; }
+
+.info-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-muted-foreground);
+  font-weight: 600;
+}
+
+.info-value {
+  font-size: 14px;
+  color: var(--color-foreground);
+  font-weight: 500;
+}
+
+.info-link {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.rule-box {
+  background: var(--color-secondary);
+  padding: 14px;
+  border-radius: var(--radius-md);
+
+  h4 { font-weight: 600; margin-bottom: 8px; font-size: 14px; }
+  p  { font-size: 13px; line-height: 1.6; color: var(--color-foreground); }
+}
+
+.rule-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 12px;
+  color: var(--color-muted-foreground);
+
+  strong { color: var(--color-foreground); font-weight: 600; }
+}
+
+.response-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-foreground);
+}
+
+.followup-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border);
+
+  &:last-child { border-bottom: none; }
+}
+
+.followup-obs {
+  flex: 1;
+  font-size: 13px;
+  color: var(--color-foreground);
+}
+
+.followup-date {
+  font-size: 12px;
+  color: var(--color-muted-foreground);
+}
+
+.owner-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.owner-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--color-foreground);
+}
+
+.actions-list { display: flex; flex-direction: column; gap: 8px; }
+
+.notes-input {
+  width: 100%;
+  min-height: 90px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-input);
+  font-size: 13px;
+  color: var(--color-foreground);
+  resize: vertical;
+  font-family: inherit;
+
+  &::placeholder { color: var(--color-muted-foreground); }
+  &:focus { outline: none; border-color: var(--color-primary); }
+}

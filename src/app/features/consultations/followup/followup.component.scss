@@ -1,0 +1,65 @@
+.page-container {
+  padding: 16px;
+  max-width: 700px;
+  margin: 0 auto;
+
+  @media (min-width: 768px) { padding: 32px 40px; }
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--color-muted-foreground);
+  margin-bottom: 10px;
+}
+
+.state-pills {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.pill {
+  padding: 14px 12px;
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--color-border);
+  background: var(--color-card);
+  color: var(--color-foreground);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transition: border-color 0.15s, background 0.15s;
+
+  .emoji { font-size: 24px; }
+
+  &:hover { background: var(--color-muted); }
+  &.active {
+    border-color: var(--color-primary);
+    background: var(--color-secondary);
+  }
+}
+
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-input);
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--color-foreground);
+  resize: vertical;
+
+  &:focus { outline: none; border-color: var(--color-primary); }
+}
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}

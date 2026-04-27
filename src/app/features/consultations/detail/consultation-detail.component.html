@@ -1,0 +1,119 @@
+@if (consulta(); as c) {
+  <div class="page-container">
+
+    <div class="status-row">
+      <a class="btn btn-outline" routerLink="/consultations">← Volver</a>
+      <app-badge [variant]="estadoVariant[c.estado]">{{ estadoLabel[c.estado] }}</app-badge>
+      <div class="status-actions">
+        <a class="btn btn-outline" [routerLink]="['/consultations', c.id, 'followup']">
+          <ion-icon name="time-outline" /> Seguimiento
+        </a>
+        <button class="btn btn-primary" (click)="archive()">
+          <ion-icon name="checkmark-circle-outline" /> Archivar
+        </button>
+      </div>
+    </div>
+
+    <div class="detail-card pet-card">
+      <div class="pet-avatar">{{ initialsOf(c.mascota.nombre) }}</div>
+      <div>
+        <h2>{{ c.mascota.nombre }}</h2>
+        <p>{{ c.mascota.raza }} · {{ sexoLabel[c.mascota.sexo] }}
+          · {{ formatPetAge(c.mascota.edadMeses) }} · {{ c.mascota.pesoKg }} kg</p>
+      </div>
+    </div>
+
+    <div class="detail-card">
+      <div class="card-header"><ion-icon name="clipboard-outline" /> Síntomas reportados</div>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">Descripción</span>
+          <span class="info-value">{{ c.descripcionSintomas }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Urgencia</span>
+          <app-badge [variant]="urgenciaVariant[c.nivelUrgencia]">
+            {{ urgenciaLabel[c.nivelUrgencia] }}
+          </app-badge>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Canal</span>
+          <span class="info-value">{{ c.canal === 'app' ? 'App móvil' : 'Web' }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Fecha</span>
+          <span class="info-value">{{ c.fechaHora | date:'dd/MM/yyyy, HH:mm' }}</span>
+        </div>
+      </div>
+    </div>
+
+    @if (c.reglaAplicada; as regla) {
+      <div class="detail-card rule-card">
+        <div class="card-header rule-header">
+          <ion-icon name="hardware-chip-outline" /> Regla aplicada
+        </div>
+        <div class="rule-box">
+          <h4>Acción recomendada</h4>
+          <p>{{ regla.accionRecomendada }}</p>
+        </div>
+        <div class="rule-meta">
+          <span>Especie: <strong>{{ regla.especieAplica }}</strong></span>
+          <span>Edad: <strong>{{ regla.edadMinMeses }}–{{ regla.edadMaxMeses }} meses</strong></span>
+          <span>Prioridad: <strong>{{ regla.prioridad }}</strong></span>
+        </div>
+      </div>
+    }
+
+    <div class="detail-card">
+      <div class="card-header"><ion-icon name="chatbubble-outline" /> Respuesta al dueño</div>
+      <p class="response-text">{{ c.respuestaGenerada }}</p>
+    </div>
+
+    @if (c.seguimientos.length > 0) {
+      <div class="detail-card">
+        <div class="card-header"><ion-icon name="time-outline" /> Seguimientos</div>
+        @for (s of c.seguimientos; track s.id) {
+          <div class="followup-item">
+            <app-badge [variant]="s.estado === 'mejoro' ? 'success' : s.estado === 'no_mejoro' ? 'danger' : 'secondary'">
+              {{ s.estado === 'mejoro' ? 'Mejoró' : s.estado === 'no_mejoro' ? 'No mejoró' : 'Sin dato' }}
+            </app-badge>
+            <span class="followup-obs">{{ s.observaciones }}</span>
+            <span class="followup-date">{{ s.fechaSeguimiento | date:'dd/MM/yyyy, HH:mm' }}</span>
+          </div>
+        }
+      </div>
+    }
+
+    <div class="detail-card">
+      <div class="card-header"><ion-icon name="person-outline" /> Dueño</div>
+      <div class="owner-section">
+        <div class="owner-avatar">{{ initialsOf(c.usuario.nombre) }}</div>
+        <div class="owner-name">{{ c.usuario.nombre }}</div>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Teléfono</span>
+        <a class="info-link" [href]="'tel:' + c.usuario.telefono">{{ c.usuario.telefono }}</a>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Email</span>
+        <a class="info-link" [href]="'mailto:' + c.usuario.email">{{ c.usuario.email }}</a>
+      </div>
+      <div class="actions-list">
+        <a class="btn btn-outline w-full" [href]="'tel:' + c.usuario.telefono">
+          <ion-icon name="call-outline" /> Llamar
+        </a>
+        <a class="btn btn-outline w-full" [href]="'mailto:' + c.usuario.email">
+          <ion-icon name="mail-outline" /> Email
+        </a>
+      </div>
+    </div>
+
+    <div class="detail-card">
+      <div class="card-header">Notas Internas</div>
+      <textarea class="notes-input" placeholder="Escribe una nota interna..."
+        [value]="noteText()" (input)="onNoteChange($event)"></textarea>
+      <button class="btn btn-primary w-full" (click)="saveNote()">Guardar Nota</button>
+    </div>
+
+  </div>
+}

@@ -1,0 +1,66 @@
+/* MascotaCare - Global Styles */
+/* Theme: Pet Care from Banani */
+
+:root {
+  /* Colors */
+  --color-background:           #F7FBFF;
+  --color-foreground:           #0F1724;
+  --color-border:               rgba(0, 0, 0, 0.08);
+  --color-input:                #FFFFFF;
+  --color-primary:              #1E90FF;
+  --color-primary-foreground:   #FFFFFF;
+  --color-secondary:            #E8F6FF;
+  --color-secondary-foreground: #0F1724;
+  --color-muted:                #F1F5F9;
+  --color-muted-foreground:     #94A3B8;
+  --color-success:              #16A34A;
+  --color-success-foreground:   #FFFFFF;
+  --color-accent:               #FFB020;
+  --color-accent-foreground:    #0F1724;
+  --color-destructive:          #EF4444;
+  --color-destructive-foreground: #FFFFFF;
+  --color-warning:              #F59E0B;
+  --color-warning-foreground:   #0F1724;
+  --color-card:                 #FFFFFF;
+  --color-card-foreground:      #0F1724;
+  --color-sidebar:              #F1F7FB;
+  --color-sidebar-foreground:   #0F1724;
+  --color-sidebar-primary:      #DFF3FF;
+
+  /* Radii */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+
+  /* Typography */
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  color: var(--color-foreground);
+}
+
+p {
+  color: var(--color-muted-foreground);
+}
+
+a {
+  color: inherit;
+}

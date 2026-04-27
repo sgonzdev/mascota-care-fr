@@ -1,0 +1,36 @@
+.page-container {
+  padding: 16px;
+  max-width: 800px;
+  margin: 0 auto;
+
+  @media (min-width: 768px) { padding: 32px 40px; }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px 16px;
+
+  @media (min-width: 600px) { grid-template-columns: 1fr 1fr; }
+}
+
+input, select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-input);
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--color-foreground);
+
+  &:focus { outline: none; border-color: var(--color-primary); }
+}
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}

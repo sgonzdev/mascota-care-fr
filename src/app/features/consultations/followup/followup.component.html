@@ -1,0 +1,35 @@
+<div class="page-container">
+  <app-page-header title="Registrar Seguimiento" subtitle="UC6 — ¿cómo está tu mascota?" />
+
+  @if (consulta(); as c) {
+    <app-card icon="time-outline" [title]="'Caso #' + c.caseNumber + ' · ' + c.mascota.nombre">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <p class="hint">Selecciona el estado actual de {{ c.mascota.nombre }}:</p>
+        <div class="state-pills">
+          <button type="button" class="pill"
+            [class.active]="estado() === 'mejoro'" (click)="setEstado('mejoro')">
+            <span class="emoji">😊</span> Mejoró
+          </button>
+          <button type="button" class="pill"
+            [class.active]="estado() === 'no_mejoro'" (click)="setEstado('no_mejoro')">
+            <span class="emoji">😟</span> No mejoró
+          </button>
+          <button type="button" class="pill"
+            [class.active]="estado() === 'sin_dato'" (click)="setEstado('sin_dato')">
+            <span class="emoji">🤷</span> Sin dato
+          </button>
+        </div>
+
+        <app-form-field label="Observaciones">
+          <textarea formControlName="observaciones" rows="4"
+            placeholder="Añade detalles opcionales sobre el estado actual..."></textarea>
+        </app-form-field>
+
+        <div class="form-actions">
+          <a [routerLink]="['/consultations', c.id]"><app-button variant="ghost">Cancelar</app-button></a>
+          <app-button type="submit" icon="checkmark-outline">Guardar seguimiento</app-button>
+        </div>
+      </form>
+    </app-card>
+  }
+</div>

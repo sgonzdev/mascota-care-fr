@@ -1,0 +1,48 @@
+<div class="page-container">
+  <div class="page-header">
+    <h1>Consultas Activas</h1>
+    <p class="subtitle">{{ activeCount() }} consultas activas en este momento</p>
+  </div>
+
+  <div class="filter-bar">
+    @for (f of filters; track f.value) {
+      <button class="filter-btn" [class.active]="activeFilter() === f.value"
+              (click)="setFilter(f.value)">
+        {{ f.label }}
+      </button>
+    }
+  </div>
+
+  <div class="consultations-list">
+    @for (c of consultas(); track c.id) {
+      <div class="consultation-card">
+        <div class="card-left">
+          <div class="pet-avatar">{{ initialsOf(c.mascota.nombre) }}</div>
+          <div class="pet-info">
+            <span class="pet-name">{{ c.mascota.nombre }}</span>
+            <span class="case-number">Caso #{{ c.caseNumber }}</span>
+            <span class="pet-meta">{{ c.mascota.raza }} · {{ formatPetAge(c.mascota.edadMeses) }}</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <span class="symptom">{{ c.descripcionSintomas }}</span>
+          <span class="date">{{ c.fechaHora | date:'dd/MM/yyyy' }}</span>
+        </div>
+        <div class="card-right">
+          <app-badge [variant]="urgenciaVariant[c.nivelUrgencia]">
+            {{ urgenciaLabel[c.nivelUrgencia] }}
+          </app-badge>
+          <app-badge [variant]="estadoVariant[c.estado]">
+            {{ estadoLabel[c.estado] }}
+          </app-badge>
+          <a class="action-btn" [routerLink]="['/consultations', c.id]">
+            <ion-icon name="eye-outline" /> Ver
+          </a>
+        </div>
+      </div>
+    }
+    @empty {
+      <div class="empty-state"><p>No hay consultas para mostrar.</p></div>
+    }
+  </div>
+</div>

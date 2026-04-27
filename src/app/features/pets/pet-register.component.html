@@ -1,0 +1,45 @@
+<div class="page-container">
+  <app-page-header title="Registrar Mascota" subtitle="UC1 — añade el perfil de tu mascota" />
+
+  <app-card icon="paw-outline" title="Datos de la mascota">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="grid">
+        <app-form-field label="Nombre" [required]="true" [error]="err('nombre')">
+          <input formControlName="nombre" placeholder="Luna" />
+        </app-form-field>
+
+        <app-form-field label="Especie" [required]="true">
+          <select formControlName="especie">
+            <option value="perro">Perro</option>
+            <option value="gato">Gato</option>
+            <option value="otro">Otro</option>
+          </select>
+        </app-form-field>
+
+        <app-form-field label="Raza" [required]="true" [error]="err('raza')">
+          <input formControlName="raza" placeholder="Golden Retriever" />
+        </app-form-field>
+
+        <app-form-field label="Sexo" [required]="true">
+          <select formControlName="sexo">
+            <option value="macho">Macho</option>
+            <option value="hembra">Hembra</option>
+          </select>
+        </app-form-field>
+
+        <app-form-field label="Edad (meses)" [required]="true" [error]="err('edadMeses')">
+          <input type="number" formControlName="edadMeses" min="0" />
+        </app-form-field>
+
+        <app-form-field label="Peso (kg)" [required]="true" [error]="err('pesoKg')">
+          <input type="number" step="0.1" formControlName="pesoKg" min="0" />
+        </app-form-field>
+      </div>
+
+      <div class="form-actions">
+        <a routerLink="/dashboard"><app-button variant="ghost">Cancelar</app-button></a>
+        <app-button type="submit" icon="checkmark-outline">Guardar mascota</app-button>
+      </div>
+    </form>
+  </app-card>
+</div>

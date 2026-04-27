@@ -1,0 +1,89 @@
+<div class="page-container">
+  <app-page-header title="Motor de Reglas" subtitle="UC8 — administra el catálogo del triage">
+    @if (!showForm()) {
+      <app-button icon="add-outline" (click)="new()">Nueva regla</app-button>
+    }
+  </app-page-header>
+
+  @if (showForm()) {
+    <app-card icon="construct-outline" [title]="editingId() ? 'Editar regla' : 'Nueva regla'">
+      <form [formGroup]="form" (ngSubmit)="save()">
+        <div class="grid">
+          <app-form-field label="Condición (síntoma clave)" [required]="true">
+            <input formControlName="condicionSintoma" placeholder="diarrea_leve_sin_sangre" />
+          </app-form-field>
+          <app-form-field label="Especie" [required]="true">
+            <select formControlName="especieAplica">
+              <option value="todas">Todas</option>
+              <option value="perro">Perro</option>
+              <option value="gato">Gato</option>
+              <option value="otro">Otro</option>
+            </select>
+          </app-form-field>
+          <app-form-field label="Edad mínima (meses)" [required]="true">
+            <input type="number" formControlName="edadMinMeses" min="0" />
+          </app-form-field>
+          <app-form-field label="Edad máxima (meses)" [required]="true">
+            <input type="number" formControlName="edadMaxMeses" min="0" />
+          </app-form-field>
+          <app-form-field label="Nivel de urgencia" [required]="true">
+            <select formControlName="nivelUrgenciaResultado">
+              <option value="BAJA">BAJA</option>
+              <option value="MEDIA">MEDIA</option>
+              <option value="ALTA">ALTA</option>
+            </select>
+          </app-form-field>
+          <app-form-field label="Prioridad (1–10)" [required]="true"
+            hint="Menor = se evalúa primero">
+            <input type="number" formControlName="prioridad" min="1" max="10" />
+          </app-form-field>
+        </div>
+
+        <app-form-field label="Acción recomendada" [required]="true">
+          <textarea formControlName="accionRecomendada" rows="3"
+            placeholder="Texto que se mostrará al dueño..."></textarea>
+        </app-form-field>
+
+        <label class="switch">
+          <input type="checkbox" formControlName="activa" />
+          <span>Regla activa</span>
+        </label>
+
+        <div class="form-actions">
+          <app-button variant="ghost" (click)="showForm.set(false)">Cancelar</app-button>
+          <app-button type="submit" icon="save-outline">Guardar</app-button>
+        </div>
+      </form>
+    </app-card>
+  }
+
+  <div class="rules-list">
+    @for (r of reglas(); track r.id) {
+      <app-card>
+        <div class="rule-row">
+          <div class="rule-info">
+            <div class="rule-head">
+              <span class="condition">{{ r.condicionSintoma }}</span>
+              <app-badge [variant]="urgenciaVariant[r.nivelUrgenciaResultado]">
+                {{ urgenciaLabel[r.nivelUrgenciaResultado] }}
+              </app-badge>
+              @if (!r.activa) { <app-badge variant="secondary">Inactiva</app-badge> }
+            </div>
+            <span class="rule-meta">
+              {{ r.especieAplica }} · {{ r.edadMinMeses }}–{{ r.edadMaxMeses }} meses · prioridad {{ r.prioridad }}
+            </span>
+            <p class="rule-action">{{ r.accionRecomendada }}</p>
+          </div>
+          <div class="rule-actions">
+            <app-button variant="ghost" size="sm" icon="create-outline" (click)="edit(r)">Editar</app-button>
+            <app-button variant="outline" size="sm"
+              [icon]="r.activa ? 'pause-outline' : 'play-outline'"
+              (click)="toggle(r)">
+              {{ r.activa ? 'Desactivar' : 'Activar' }}
+            </app-button>
+          </div>
+        </div>
+      </app-card>
+    }
+  </div>
+</div>

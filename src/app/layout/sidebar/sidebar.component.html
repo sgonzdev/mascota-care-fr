@@ -1,0 +1,36 @@
+<div class="sidebar">
+  <div class="brand-logo">
+    <div class="brand-icon"><ion-icon name="paw-outline" /></div>
+    <h2>MascotaCare</h2>
+  </div>
+
+  @for (section of sections(); track section.title) {
+    <nav class="nav-section">
+      <span class="nav-label">{{ section.title }}</span>
+      @for (item of section.items; track item.route) {
+        <a class="nav-item" [routerLink]="item.route" routerLinkActive="active"
+           [routerLinkActiveOptions]="{exact: item.route === '/consultations'}"
+           (click)="navigate.emit()">
+          <ion-icon [name]="item.icon" />
+          {{ item.label }}
+        </a>
+      }
+    </nav>
+  }
+
+  <div class="sidebar-footer">
+    @if (usuario(); as u) {
+      <div class="user-chip">
+        <div class="user-avatar">{{ u.nombre[0] }}</div>
+        <div class="user-info">
+          <span class="user-name">{{ u.nombre }}</span>
+          <span class="user-role">{{ u.rol === 'admin' ? 'Administrador' : 'Dueño' }}</span>
+        </div>
+      </div>
+    }
+    <button class="nav-item logout-btn" (click)="logout()">
+      <ion-icon name="log-out-outline" />
+      Cerrar sesión
+    </button>
+  </div>
+</div>

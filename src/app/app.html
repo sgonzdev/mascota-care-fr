@@ -1,0 +1,29 @@
+@if (showShell()) {
+  <div class="app-shell">
+    <aside class="app-sidebar" [class.open]="menuOpen()">
+      <app-sidebar (navigate)="closeMenu()" />
+    </aside>
+
+    <div class="app-overlay" [class.visible]="menuOpen()"
+      role="button" tabindex="0" aria-label="Cerrar menú"
+      (click)="closeMenu()"
+      (keydown.enter)="closeMenu()"
+      (keydown.escape)="closeMenu()">
+    </div>
+
+    <main class="app-main">
+      <header class="app-topbar">
+        <button class="menu-toggle" (click)="toggleMenu()" aria-label="Menú">
+          <ion-icon name="menu-outline" />
+        </button>
+        <span class="topbar-title">MascotaCare</span>
+      </header>
+      <div class="app-content">
+        <router-outlet />
+      </div>
+    </main>
+  </div>
+} @else {
+  <router-outlet />
+}
+<app-toast />
