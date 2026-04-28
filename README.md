@@ -1,4 +1,9 @@
-# Mascotacare
+# MascotaCare — Frontend
+
+> **Autores:** Santiago Gonzalez Becerra · Jhon Esteban Pinto
+> **Año:** 2026
+
+Aplicación web (Angular 21 + Ionic) y dashboard administrativo del sistema MascotaCare Soluciona — plataforma de atención primaria y triage digital para mascotas.
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.5.
 
