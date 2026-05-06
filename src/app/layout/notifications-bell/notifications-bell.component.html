@@ -1,0 +1,50 @@
+<div class="bell-wrap">
+  <button class="bell" (click)="toggle()" aria-label="Notificaciones">
+    <ion-icon name="notifications-outline" />
+    @if (unread() > 0) {
+      <span class="badge">{{ unread() > 9 ? '9+' : unread() }}</span>
+    }
+  </button>
+
+  @if (open()) {
+    <div class="backdrop" (click)="close()"
+         (keydown.escape)="close()" role="button" tabindex="-1"></div>
+
+    <div class="panel" role="dialog" aria-label="Notificaciones recientes">
+      <header class="panel-head">
+        <h3>Notificaciones</h3>
+        <span class="count">{{ recent().length }} de {{ notif.items().length }}</span>
+      </header>
+
+      <div class="panel-body">
+        @if (recent().length === 0) {
+          <div class="empty">
+            <ion-icon name="notifications-off-outline" />
+            <p>Sin notificaciones recientes</p>
+          </div>
+        } @else {
+          @for (n of recent(); track n.id) {
+            <article class="item" [class.unread]="n.estado === 'PENDIENTE' || n.estado === 'FALLIDA'">
+              <span class="canal-icon" [attr.data-canal]="n.canal">
+                <ion-icon [name]="iconFor(n.canal)" />
+              </span>
+              <div class="item-body">
+                <div class="item-head">
+                  <span class="asunto">{{ n.asunto || '(sin asunto)' }}</span>
+                  <span class="time">{{ n.creadaEn | date:'HH:mm' }}</span>
+                </div>
+                <p class="content">{{ n.contenido }}</p>
+              </div>
+            </article>
+          }
+        }
+      </div>
+
+      <footer class="panel-foot">
+        <button class="view-all" (click)="viewAll()">
+          Ver todas <ion-icon name="arrow-forward-outline" />
+        </button>
+      </footer>
+    </div>
+  }
+</div>

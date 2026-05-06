@@ -69,6 +69,20 @@
       <p class="response-text">{{ c.respuestaGenerada }}</p>
     </div>
 
+    @if (c.nivelUrgencia === 'ALTA') {
+      <div class="detail-card urgent-card">
+        <div class="card-header urgent-header">
+          <ion-icon name="alert-circle-outline" /> Urgencia ALTA — atención presencial
+        </div>
+        <p class="urgent-text">
+          Esta consulta requiere una valoración veterinaria presencial cuanto antes.
+        </p>
+        <a class="btn btn-primary w-full" routerLink="/clinicas">
+          <ion-icon name="location-outline" /> Ver veterinarias cerca
+        </a>
+      </div>
+    }
+
     @if (c.seguimientos.length > 0) {
       <div class="detail-card">
         <div class="card-header"><ion-icon name="time-outline" /> Seguimientos</div>

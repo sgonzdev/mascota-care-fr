@@ -56,22 +56,30 @@ export class RulesAdminComponent {
     this.showForm.set(true);
   }
 
-  save(): void {
+  async save(): Promise<void> {
     if (this.form.invalid) { this.form.markAllAsTouched(); return; }
     const data = this.form.getRawValue();
     const id = this.editingId();
-    if (id) {
-      this.rules.update(id, data);
-      this.toast.success('Regla actualizada');
-    } else {
-      this.rules.create(data);
-      this.toast.success('Regla creada');
+    try {
+      if (id) {
+        await this.rules.update(id, data);
+        this.toast.success('Regla actualizada');
+      } else {
+        await this.rules.create(data);
+        this.toast.success('Regla creada');
+      }
+      this.showForm.set(false);
+    } catch {
+      this.toast.error('No se pudo guardar la regla');
     }
-    this.showForm.set(false);
   }
 
-  toggle(r: Regla): void {
-    this.rules.toggle(r.id);
-    this.toast.info(`Regla ${r.activa ? 'desactivada' : 'activada'}`);
+  async toggle(r: Regla): Promise<void> {
+    try {
+      await this.rules.toggle(r.id);
+      this.toast.info(`Regla ${r.activa ? 'desactivada' : 'activada'}`);
+    } catch {
+      this.toast.error('No se pudo actualizar el estado de la regla');
+    }
   }
 }

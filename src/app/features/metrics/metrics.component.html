@@ -23,20 +23,20 @@
   <div class="charts-grid">
     <app-card title="Consultas por día" icon="trending-up-outline">
       <div class="chart-wrap">
-        <canvas baseChart type="line" [data]="volumeChart" [options]="chartOptions!"></canvas>
+        <canvas baseChart type="line" [data]="volumeChart()" [options]="chartOptions!"></canvas>
       </div>
     </app-card>
 
     <app-card title="Distribución de urgencia" icon="pie-chart-outline">
       <div class="chart-wrap">
-        <canvas baseChart type="doughnut" [data]="distributionChart"
+        <canvas baseChart type="doughnut" [data]="distributionChart()"
           [options]="{ responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }"></canvas>
       </div>
     </app-card>
 
     <app-card title="Tasa de mejora diaria" icon="bar-chart-outline">
       <div class="chart-wrap">
-        <canvas baseChart type="bar" [data]="improvementChart" [options]="chartOptions!"></canvas>
+        <canvas baseChart type="bar" [data]="improvementChart()" [options]="chartOptions!"></canvas>
       </div>
     </app-card>
   </div>

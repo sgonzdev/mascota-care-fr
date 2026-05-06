@@ -1,47 +1,87 @@
 .page-container {
-  padding: 16px;
-  max-width: 1200px;
+  padding: var(--space-6);
+  max-width: 1280px;
   margin: 0 auto;
+  position: relative;
+  z-index: 2;
 
-  @media (min-width: 768px) { padding: 32px 40px; }
+  @media (min-width: 768px) { padding: var(--space-10) var(--space-12); }
 }
 
+/* KPIs estilo financial dashboard — sin gap, divisores 1px */
 .kpi-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: 0;
+  margin-bottom: var(--space-8);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
 
-  app-card {
-    padding: 16px 20px;
+:host ::ng-deep .kpi-row app-card {
+  border: none;
+  border-right: 1px solid var(--color-border);
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+
+  &:last-child { border-right: none; }
+
+  @media (max-width: 767px) {
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+    &:last-child { border-bottom: none; }
+  }
+
+  &:hover { background: var(--color-surface-2); border-color: var(--color-border); }
+
+  .card-body {
+    padding: var(--space-6);
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: var(--space-4);
+    min-height: 120px;
   }
 }
 
 .kpi-label {
+  font-family: var(--font-mono);
   font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.6px;
-  color: var(--color-muted-foreground);
-  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-foreground-muted);
+  font-weight: 500;
 }
 
 .kpi-value {
-  font-size: 28px;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 44px;
+  font-weight: 500;
   line-height: 1;
+  color: var(--color-foreground);
+  letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums lining-nums;
+  margin-top: auto;
 
   &.danger  { color: var(--color-destructive); }
   &.success { color: var(--color-success); }
-  &.small   { font-size: 16px; font-weight: 600; }
+  &.small   {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--color-foreground);
+    letter-spacing: -0.01em;
+    word-break: break-word;
+  }
 }
 
 .charts-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
+  gap: var(--space-5);
 
   @media (min-width: 900px) {
     grid-template-columns: 2fr 1fr;
@@ -51,5 +91,5 @@
 
 .chart-wrap {
   position: relative;
-  height: 260px;
+  height: 280px;
 }

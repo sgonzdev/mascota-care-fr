@@ -30,6 +30,13 @@ export class SidebarComponent {
           { label: 'Registrar Mascota', icon: 'paw-outline', route: '/pets/new' },
         ],
       },
+      {
+        title: 'Recursos',
+        items: [
+          { label: 'Guías de Cuidado', icon: 'book-outline', route: '/guias' },
+          { label: 'Clínicas cercanas', icon: 'location-outline', route: '/clinicas' },
+        ],
+      },
     ];
     if (this.isAdmin()) {
       base.push({
@@ -37,14 +44,15 @@ export class SidebarComponent {
         items: [
           { label: 'Métricas', icon: 'bar-chart-outline', route: '/metrics' },
           { label: 'Motor de Reglas', icon: 'git-merge-outline', route: '/admin/rules' },
+          { label: 'Notificaciones', icon: 'notifications-outline', route: '/notifications' },
         ],
       });
     }
     return base;
   });
 
-  logout(): void {
-    this.auth.logout();
+  async logout(): Promise<void> {
+    await this.auth.logout();
     this.router.navigate(['/login']);
     this.navigate.emit();
   }

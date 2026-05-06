@@ -29,11 +29,15 @@ export class PetRegisterComponent {
     sexo: ['macho' as 'macho' | 'hembra', Validators.required],
   });
 
-  submit(): void {
+  async submit(): Promise<void> {
     if (this.form.invalid) { this.form.markAllAsTouched(); return; }
-    const mascota = this.service.create(this.form.getRawValue());
-    this.toast.success(`${mascota.nombre} fue registrada`);
-    this.router.navigate(['/consultations/new'], { queryParams: { pet: mascota.id } });
+    try {
+      const mascota = await this.service.create(this.form.getRawValue());
+      this.toast.success(`${mascota.nombre} fue registrada`);
+      this.router.navigate(['/consultations/new'], { queryParams: { pet: mascota.id } });
+    } catch {
+      this.toast.error('No se pudo registrar la mascota');
+    }
   }
 
   err(ctrl: string): string | null {

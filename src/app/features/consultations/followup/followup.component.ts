@@ -35,14 +35,19 @@ export class FollowupComponent {
 
   setEstado(e: EstadoSeguimiento): void { this.estado.set(e); }
 
-  submit(): void {
+  async submit(): Promise<void> {
     const c = this.consulta();
     if (!c) return;
-    this.service.addFollowup(c.id, {
-      fechaSeguimiento: new Date(),
-      estado: this.estado(),
-      observaciones: this.form.controls.observaciones.value,
-    });
+    try {
+      await this.service.addFollowup(c.id, {
+        fechaSeguimiento: new Date(),
+        estado: this.estado(),
+        observaciones: this.form.controls.observaciones.value,
+      });
+    } catch {
+      this.toast.error('No se pudo registrar el seguimiento');
+      return;
+    }
     const msg = this.estado() === 'mejoro'
       ? 'Seguimiento guardado — ¡qué bueno que mejoró!'
       : this.estado() === 'no_mejoro'

@@ -1,0 +1,66 @@
+@if (mascota(); as m) {
+  <div class="page-container">
+    <app-page-header [title]="m.nombre" subtitle="Detalle de mascota">
+      <a routerLink="/dashboard"><app-button variant="ghost">Volver</app-button></a>
+      @if (!editing()) {
+        <app-button variant="outline" icon="create-outline" (click)="startEdit()">Editar</app-button>
+        <app-button variant="danger" icon="trash-outline" (click)="remove()">Eliminar</app-button>
+      }
+    </app-page-header>
+
+    @if (!editing()) {
+      <app-card icon="paw-outline" title="Información de la mascota">
+        <div class="info-grid">
+          <div class="info-item"><span class="info-label">Especie</span>
+            <span class="info-value">{{ m.especie }}</span></div>
+          <div class="info-item"><span class="info-label">Raza</span>
+            <span class="info-value">{{ m.raza }}</span></div>
+          <div class="info-item"><span class="info-label">Sexo</span>
+            <span class="info-value">{{ sexoLabel[m.sexo] }}</span></div>
+          <div class="info-item"><span class="info-label">Edad</span>
+            <span class="info-value">{{ formatPetAge(m.edadMeses) }}</span></div>
+          <div class="info-item"><span class="info-label">Peso</span>
+            <span class="info-value">{{ m.pesoKg }} kg</span></div>
+        </div>
+      </app-card>
+    } @else {
+      <app-card icon="create-outline" title="Editar datos">
+        <form [formGroup]="form" (ngSubmit)="save()">
+          <div class="grid">
+            <app-form-field label="Nombre" [required]="true" [error]="err('nombre')">
+              <input formControlName="nombre" />
+            </app-form-field>
+            <app-form-field label="Especie" [required]="true">
+              <select formControlName="especie">
+                <option value="perro">Perro</option>
+                <option value="gato">Gato</option>
+                <option value="otro">Otro</option>
+              </select>
+            </app-form-field>
+            <app-form-field label="Raza" [required]="true" [error]="err('raza')">
+              <input formControlName="raza" />
+            </app-form-field>
+            <app-form-field label="Sexo" [required]="true">
+              <select formControlName="sexo">
+                <option value="macho">Macho</option>
+                <option value="hembra">Hembra</option>
+              </select>
+            </app-form-field>
+            <app-form-field label="Edad (meses)" [required]="true" [error]="err('edadMeses')">
+              <input type="number" formControlName="edadMeses" min="0" />
+            </app-form-field>
+            <app-form-field label="Peso (kg)" [required]="true" [error]="err('pesoKg')">
+              <input type="number" step="0.1" formControlName="pesoKg" min="0" />
+            </app-form-field>
+          </div>
+          <div class="form-actions">
+            <app-button variant="ghost" (click)="cancelEdit()">Cancelar</app-button>
+            <app-button type="submit" icon="save-outline" [disabled]="saving()">Guardar</app-button>
+          </div>
+        </form>
+      </app-card>
+    }
+  </div>
+} @else {
+  <div class="page-container"><p>Mascota no encontrada.</p></div>
+}

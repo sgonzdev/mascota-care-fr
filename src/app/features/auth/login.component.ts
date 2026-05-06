@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { IonIcon } from '@ionic/angular/standalone';
 import { AuthService } from '../../core/services/auth.service';
 import { ToastService } from '../../core/services/toast.service';
@@ -10,7 +10,7 @@ import { FormFieldComponent } from '../../shared/components/form-field/form-fiel
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, IonIcon, ButtonComponent, FormFieldComponent],
+  imports: [ReactiveFormsModule, RouterLink, IonIcon, ButtonComponent, FormFieldComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })

@@ -9,6 +9,7 @@ import { provideRouter, withComponentInputBinding, withViewTransitions } from '@
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { errorInterceptor } from './core/interceptors/error.interceptor';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -16,7 +17,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideAnimations(),
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(withInterceptors([authInterceptor, errorInterceptor])),
     provideRouter(
       routes,
       withComponentInputBinding(),

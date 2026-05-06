@@ -1,0 +1,105 @@
+.page-container {
+  padding: var(--space-6);
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  position: relative;
+  z-index: 2;
+
+  @media (min-width: 768px) { padding: var(--space-10) var(--space-12); }
+}
+
+.filters {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  padding: 4px;
+  background: var(--color-surface-tinted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  width: fit-content;
+}
+
+.filter-btn {
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--color-foreground-soft);
+  font-weight: 500;
+  transition: background var(--transition-fast), color var(--transition-fast);
+
+  &:hover:not(.active) { color: var(--color-foreground); }
+  &.active {
+    background: var(--color-surface);
+    color: var(--color-foreground);
+    box-shadow: var(--shadow-xs);
+    font-weight: 600;
+  }
+}
+
+.loading-msg {
+  color: var(--color-muted-foreground);
+  font-size: 14px;
+}
+
+.notif-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.notif-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.notif-info {
+  flex: 1;
+  min-width: 240px;
+
+  .row-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+    .canal {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-primary);
+      text-transform: uppercase;
+    }
+    .dest {
+      font-size: 12px;
+      color: var(--color-muted-foreground);
+    }
+  }
+  h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .content { font-size: 13px; color: var(--color-muted-foreground); }
+  .error-msg {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--color-destructive);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+}
+
+.notif-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--color-muted-foreground);
+  white-space: nowrap;
+  .sent { color: var(--color-success); }
+}

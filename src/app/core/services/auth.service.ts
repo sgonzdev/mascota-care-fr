@@ -1,6 +1,7 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { RolUsuario, Usuario } from '../models/consultation.model';
-import { AUTH_REPOSITORY } from '../repositories/auth.repository';
+import { AUTH_REPOSITORY, RegisterPayload } from '../repositories/auth.repository';
 
 const STORAGE_KEY = 'mc_session';
 
@@ -12,6 +13,7 @@ interface Session {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly repo = inject(AUTH_REPOSITORY);
+  private readonly router = inject(Router);
   private readonly _session = signal<Session | null>(this.restore());
 
   readonly usuario = computed(() => this._session()?.usuario ?? null);
@@ -29,9 +31,32 @@ export class AuthService {
     this.persist(result);
   }
 
-  logout(): void {
-    localStorage.removeItem(STORAGE_KEY);
-    this._session.set(null);
+  async register(data: RegisterPayload): Promise<void> {
+    const result = await this.repo.register(data);
+    this.persist(result);
+  }
+
+  async logout(): Promise<void> {
+    try {
+      await this.repo.logout();
+    } finally {
+      localStorage.removeItem(STORAGE_KEY);
+      this._session.set(null);
+      this.router.navigate(['/login']);
+    }
+  }
+
+  /** Used by the error interceptor on 401. Returns the new access token or null. */
+  async tryRefresh(): Promise<string | null> {
+    const result = await this.repo.refresh();
+    if (!result) return null;
+    this.persist(result);
+    return result.token;
+  }
+
+  /** Updates the stored access token after a refresh. */
+  setSession(usuario: Usuario, token: string): void {
+    this.persist({ usuario, token });
   }
 
   private persist(session: Session): void {

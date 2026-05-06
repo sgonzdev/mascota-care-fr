@@ -7,7 +7,7 @@
 
 /* ── Sidebar ── */
 .app-sidebar {
-  width: 260px;
+  width: 272px;
   flex-shrink: 0;
   background: var(--color-sidebar);
   border-right: 1px solid var(--color-border);
@@ -20,8 +20,8 @@
     left: 0;
     height: 100%;
     transform: translateX(-100%);
-    transition: transform 0.25s ease;
-    box-shadow: 4px 0 16px rgba(0,0,0,0.12);
+    transition: transform var(--transition-base);
+    box-shadow: var(--shadow-xl);
 
     &.open { transform: translateX(0); }
   }
@@ -35,11 +35,12 @@
     display: block;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.4);
+    background: rgba(11, 18, 32, 0.45);
+    backdrop-filter: blur(2px);
     z-index: 99;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.25s ease;
+    transition: opacity var(--transition-base);
 
     &.visible {
       opacity: 1;
@@ -57,18 +58,16 @@
   min-width: 0;
 }
 
-/* ── Top bar (solo móvil) ── */
+/* ── Top bar (visible siempre) ── */
 .app-topbar {
-  display: none;
+  display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 0 16px;
+  gap: var(--space-3);
+  padding: 0 var(--space-5);
   height: 56px;
-  background: var(--color-card);
+  background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
   flex-shrink: 0;
-
-  @media (max-width: 767px) { display: flex; }
 }
 
 .menu-toggle {
@@ -76,22 +75,33 @@
   border: none;
   cursor: pointer;
   color: var(--color-foreground);
-  display: flex;
+  display: none;
   align-items: center;
-  padding: 6px;
+  padding: var(--space-2);
   border-radius: var(--radius-md);
   font-size: 22px;
+  transition: background var(--transition-fast);
 
-  &:hover { background: var(--color-secondary); }
+  &:hover { background: var(--color-muted); }
+
+  @media (max-width: 767px) { display: flex; }
+}
+
+.topbar-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
 }
 
 .topbar-title {
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-weight: 500;
   font-size: 16px;
-  color: var(--color-foreground);
+  letter-spacing: -0.01em;
 }
 
-/* ── Content scroll area ── */
+/* ── Content scroll ── */
 .app-content {
   flex: 1;
   overflow-y: auto;

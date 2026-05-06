@@ -1,0 +1,62 @@
+<div class="page-container">
+  <app-page-header title="Guías de Cuidado"
+                   subtitle="UC4 — guías personalizadas por mascota y tipo" />
+
+  @if (myPets().length === 0) {
+    <app-empty-state icon="paw-outline"
+                     title="Necesitas registrar una mascota"
+                     description="Para generar guías primero registra al menos una mascota." />
+  } @else {
+    <app-card icon="document-text-outline" title="Generar nueva guía">
+      <form [formGroup]="form" (ngSubmit)="generate()">
+        <div class="grid">
+          <app-form-field label="Mascota" [required]="true">
+            <select formControlName="idMascota">
+              @for (m of myPets(); track m.id) {
+                <option [value]="m.id">{{ m.nombre }} · {{ m.especie }}</option>
+              }
+            </select>
+          </app-form-field>
+          <app-form-field label="Tipo de guía" [required]="true">
+            <select formControlName="tipo">
+              @for (t of tipos; track t.value) {
+                <option [value]="t.value">{{ t.label }}</option>
+              }
+            </select>
+          </app-form-field>
+        </div>
+        <div class="form-actions">
+          <app-button type="submit" icon="sparkles-outline" [disabled]="loading()">
+            {{ loading() ? 'Generando…' : 'Generar guía' }}
+          </app-button>
+        </div>
+      </form>
+    </app-card>
+
+    @if (current(); as g) {
+      <app-card icon="book-outline" title="Guía actual">
+        <p class="meta">
+          Tipo: <strong>{{ g.tipo }}</strong> · Fuente: <strong>{{ g.fuente }}</strong>
+          · {{ g.fechaGeneracion | date:'dd/MM/yyyy HH:mm' }}
+        </p>
+        <div class="guide-html" [innerHTML]="safeHtml(g.contenidoHtml)"></div>
+      </app-card>
+    }
+
+    @if (history().length > 0) {
+      <app-card icon="time-outline" title="Historial de guías">
+        <ul class="history-list">
+          @for (g of history(); track g.id) {
+            <li>
+              <button class="history-link" (click)="showHistorical(g.id)">
+                <span class="tipo">{{ g.tipo }}</span>
+                <span class="date">{{ g.fechaGeneracion | date:'dd/MM/yyyy HH:mm' }}</span>
+                <span class="src">{{ g.fuente }}</span>
+              </button>
+            </li>
+          }
+        </ul>
+      </app-card>
+    }
+  }
+</div>

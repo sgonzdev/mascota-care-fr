@@ -7,6 +7,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/auth/login.component').then(m => m.LoginComponent),
   },
   {
+    path: 'register',
+    loadComponent: () => import('./features/auth/register.component').then(m => m.RegisterComponent),
+  },
+  {
     path: '',
     canActivate: [authGuard],
     children: [
@@ -18,6 +22,10 @@ export const routes: Routes = [
       {
         path: 'pets/new',
         loadComponent: () => import('./features/pets/pet-register.component').then(m => m.PetRegisterComponent),
+      },
+      {
+        path: 'pets/:id',
+        loadComponent: () => import('./features/pets/pet-detail.component').then(m => m.PetDetailComponent),
       },
       {
         path: 'consultations',
@@ -34,6 +42,19 @@ export const routes: Routes = [
       {
         path: 'consultations/:id/followup',
         loadComponent: () => import('./features/consultations/followup/followup.component').then(m => m.FollowupComponent),
+      },
+      {
+        path: 'clinicas',
+        loadComponent: () => import('./features/clinics/clinics.component').then(m => m.ClinicsComponent),
+      },
+      {
+        path: 'guias',
+        loadComponent: () => import('./features/guides/guides.component').then(m => m.GuidesComponent),
+      },
+      {
+        path: 'notifications',
+        canActivate: [adminGuard],
+        loadComponent: () => import('./features/notifications/notifications.component').then(m => m.NotificationsComponent),
       },
       {
         path: 'metrics',

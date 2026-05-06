@@ -1,0 +1,50 @@
+<div class="page-container">
+  <app-page-header title="Clínicas Veterinarias Cercanas"
+                   subtitle="UC5 — encuentra atención cerca cuando hay urgencia">
+    <app-button icon="location-outline" [disabled]="loading()" (click)="search()">
+      {{ loading() ? 'Buscando…' : 'Usar mi ubicación' }}
+    </app-button>
+  </app-page-header>
+
+  @if (loading()) {
+    <div class="skeleton-list">
+      @for (_ of [1,2,3]; track $index) {
+        <div class="skeleton-card"></div>
+      }
+    </div>
+  } @else if (error(); as err) {
+    <app-empty-state icon="alert-circle-outline"
+                     [title]="err.kind === 'permission' ? 'Permiso denegado' : 'No se pudo buscar'"
+                     [description]="err.message + ' — TODO: alternativa por código postal.'">
+      <app-button icon="location-outline" (click)="search()">Reintentar</app-button>
+    </app-empty-state>
+  } @else if (hasResults()) {
+    <div class="clinics-list">
+      @for (c of clinicas(); track c.id) {
+        <app-card>
+          <div class="clinic-row">
+            <div class="clinic-info">
+              <h3>{{ c.nombre }}</h3>
+              <p class="address"><ion-icon name="location-outline" /> {{ c.direccion }}</p>
+              <p class="distance">{{ formatDistance(c.distanciaMetros) }} · fuente {{ c.fuente }}</p>
+            </div>
+            <div class="clinic-actions">
+              @if (c.telefono) {
+                <a [href]="'tel:' + c.telefono">
+                  <app-button variant="outline" size="sm" icon="call-outline">Llamar</app-button>
+                </a>
+              }
+              <a [href]="mapsUrl(c)" target="_blank" rel="noopener">
+                <app-button variant="outline" size="sm" icon="map-outline">Mapa</app-button>
+              </a>
+            </div>
+          </div>
+        </app-card>
+      }
+    </div>
+  } @else {
+    <app-empty-state icon="medkit-outline"
+                     title="Sin resultados aún"
+                     description="Pulsa “Usar mi ubicación” para buscar veterinarias en un radio de 5 km." />
+  }
+</div>

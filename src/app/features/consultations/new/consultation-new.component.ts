@@ -51,14 +51,18 @@ export class ConsultationNewComponent {
     else if (this.myPets()[0]) this.form.patchValue({ idMascota: this.myPets()[0]!.id });
   }
 
-  submit(): void {
+  async submit(): Promise<void> {
     if (this.form.invalid) { this.form.markAllAsTouched(); return; }
     const pet = this.selectedPet();
     if (!pet) return;
     const { descripcionSintomas } = this.form.getRawValue();
-    const { consulta, triage } = this.consultations.create(pet, descripcionSintomas);
-    this.result.set({ id: consulta.id, nivel: triage.nivel, accion: triage.accion });
-    this.toast.success(`Triage completado: urgencia ${triage.nivel}`);
+    try {
+      const { consulta, triage } = await this.consultations.create(pet, descripcionSintomas);
+      this.result.set({ id: consulta.id, nivel: triage.nivel, accion: triage.accion });
+      this.toast.success(`Triage completado: urgencia ${triage.nivel}`);
+    } catch {
+      this.toast.error('No se pudo realizar el triage');
+    }
   }
 
   goToDetail(): void {

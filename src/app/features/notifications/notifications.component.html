@@ -1,0 +1,54 @@
+<div class="page-container">
+  <app-page-header title="Centro de Notificaciones"
+                   subtitle="Auditoría de envíos multi-canal (UC5)">
+    <app-button variant="outline" icon="checkmark-circle-outline" (click)="refresh()">
+      Actualizar
+    </app-button>
+  </app-page-header>
+
+  <div class="filters">
+    @for (f of filters; track f.value) {
+      <button class="filter-btn"
+              [class.active]="canal() === f.value"
+              (click)="setFilter(f.value)">{{ f.label }}</button>
+    }
+  </div>
+
+  @if (loading()) {
+    <p class="loading-msg">Cargando notificaciones…</p>
+  } @else if (items().length === 0) {
+    <app-empty-state icon="notifications-outline"
+                     title="Sin notificaciones"
+                     description="Aún no hay envíos registrados para este filtro." />
+  } @else {
+    <div class="notif-list">
+      @for (n of items(); track n.id) {
+        <app-card>
+          <div class="notif-row">
+            <div class="notif-info">
+              <div class="row-top">
+                <span class="canal">{{ n.canal }}</span>
+                <app-badge [variant]="estadoVariant[n.estado]">{{ n.estado }}</app-badge>
+                <span class="dest">{{ n.destinatario }}</span>
+              </div>
+              <h4>{{ n.asunto || '(sin asunto)' }}</h4>
+              <p class="content">{{ n.contenido }}</p>
+              @if (n.errorMessage) {
+                <p class="error-msg">
+                  <ion-icon name="warning-outline" /> {{ n.errorMessage }}
+                </p>
+              }
+            </div>
+            <div class="notif-meta">
+              <span>Intentos: <strong>{{ n.intentos }}</strong></span>
+              <span>{{ n.creadaEn | date:'dd/MM/yyyy HH:mm' }}</span>
+              @if (n.enviadaEn) {
+                <span class="sent">enviada {{ n.enviadaEn | date:'HH:mm' }}</span>
+              }
+            </div>
+          </div>
+        </app-card>
+      }
+    </div>
+  }
+</div>

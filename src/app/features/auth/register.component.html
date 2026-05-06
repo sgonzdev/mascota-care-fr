@@ -1,0 +1,34 @@
+<div class="login-shell">
+  <div class="login-card">
+    <div class="brand">
+      <div class="brand-icon"><ion-icon name="paw-outline" /></div>
+      <h1>Crear cuenta</h1>
+      <p>Empieza a cuidar a tu mascota</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <app-form-field label="Nombre" [required]="true" [error]="err('nombre')">
+        <input formControlName="nombre" placeholder="María García" />
+      </app-form-field>
+      <app-form-field label="Email" [required]="true" [error]="err('email')">
+        <input type="email" formControlName="email" placeholder="tucorreo@email.com" />
+      </app-form-field>
+      <app-form-field label="Teléfono" [error]="err('telefono')">
+        <input type="tel" formControlName="telefono" placeholder="+34 612 345 678" />
+      </app-form-field>
+      <app-form-field label="Contraseña" [required]="true" [error]="err('password')"
+                      hint="Mínimo 8 caracteres">
+        <input type="password" formControlName="password" placeholder="••••••••" />
+      </app-form-field>
+      <app-button type="submit" [full]="true" [disabled]="loading()">
+        Crear cuenta
+      </app-button>
+    </form>
+
+    <div class="divider"><span>¿Ya tienes cuenta?</span></div>
+
+    <a routerLink="/login" class="signup-link">
+      <app-button variant="outline" [full]="true">Iniciar sesión</app-button>
+    </a>
+  </div>
+</div>
